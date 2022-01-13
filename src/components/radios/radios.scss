@@ -1,0 +1,27 @@
+ap-input-radios {
+  display: block;
+  position: absolute;
+
+  .ap-input-radios {
+    &__label {
+      display: flex;
+      box-sizing: border-box;
+      width: 100%;
+      height: 100%;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid black;
+    }
+
+    &__input {
+      margin: 0;
+    }
+  }
+
+  &.ap-input-radios--is-selected {
+    .ap-input-radios__label {
+      border-width: 5px;
+      border-color: red;
+    }
+  }
+}
