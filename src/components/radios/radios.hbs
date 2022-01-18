@@ -1,12 +1,13 @@
 <label
-        class="ap-input-radios__label"
+        class="{{controller}}__label"
 >
     <input
             id="input"
-            class="ap-input-radios__input"
+            class="{{controller}}__input"
             type="radio"
             name="{{name}}"
             value="{{value}}"
-            {{#if checked}}checked{{/if}}
+            {{#if (controllerValue 'checked')}}checked{{/if}}
+            data-action="input->{{controller}}#select deselect->{{controller}}#deselect"
     >
 </label>

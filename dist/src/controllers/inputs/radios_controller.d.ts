@@ -5,11 +5,15 @@ export default class extends Controller {
         left: StringConstructor;
         width: StringConstructor;
         height: StringConstructor;
+        checked: StringConstructor;
     };
+    private checkedValue;
     connect(): void;
     topValueChanged(value: string): void;
     leftValueChanged(value: string): void;
     widthValueChanged(value: string): void;
     heightValueChanged(value: string): void;
-    select(): void;
+    checkedValueChanged(value: string): void;
+    select(event: Event): void;
+    deselect(event: Event): void;
 }
