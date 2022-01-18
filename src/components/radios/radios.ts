@@ -57,5 +57,3 @@ export class Radios extends HTMLElement {
         });
     }
 }
-
-window.customElements.define('ap-input-radios', Radios);

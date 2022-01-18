@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>APamoka Question Input</title>
+</head>
+<body>
+    <script src="../dist/bundle.js"></script>
+    <script src="example.js"></script>
+    <div style="width: 100%; padding: 20px 120px; box-sizing: border-box;">
+        <label>
+            <textarea rows="50" style="width: 100%">
+                {
+    "links": {
+        "points": 1
+    },
+    "inputs": [
+        // inputs with points
+        {
+            "type": "number", // any other type
+            "points": 1
+            // ... other attributes
+        },
+        {
+            "type": "checkboxes",
+            // for every correct checkbox (e.g. 1 x 3 correct checkboxes, 3 points in total)
+            "points": 1
+            // ... other attributes
+        },
+        // groups
+        {
+            "type": "number", // any other type except linkable
+            "group": 1
+            // also define "groups" at the bottom
+            // ... other attributes
+        },
+        // inputs
+        {
+            "type": "radios",
+            "inputs": [
+                {
+                    "value": "on",
+                    "top": 0,
+                    "left": 0,
+                    "width": 30,
+                    "height": 30
+                },
+                {
+                    "top": 0,
+                    "left": 40,
+                    "width": 30,
+                    "height": 30
+                }
+            ]
+        },
+        {
+            "type": "radios-x",
+            "inputs": [
+                {
+                    "value": "on",
+                    "top": 0,
+                    "left": 0,
+                    "width": 30,
+                    "height": 30
+                },
+                {
+                    "top": 0,
+                    "left": 40,
+                    "width": 30,
+                    "height": 30
+                }
+            ]
+        },
+        {
+            "type": "checkboxes",
+            "inputs": [
+                {
+                    "top": 40,
+                    "left": 0,
+                    "width": 30,
+                    "height": 30
+                },
+                {
+                    "value": "on",
+                    "top": 40,
+                    "left": 40,
+                    "width": 30,
+                    "height": 30
+                },
+                {
+                    "value": "on",
+                    "top": 40,
+                    "left": 80,
+                    "width": 30,
+                    "height": 30
+                }
+            ]
+        },
+        {
+            "type": "checkboxes-x",
+            "class": "bg-red",
+            "inputs": [
+                {
+                    "top": 40,
+                    "left": 0,
+                    "width": 30,
+                    "height": 30
+                },
+                {
+                    "value": "on",
+                    "top": 40,
+                    "left": 40,
+                    "width": 30,
+                    "height": 30
+                },
+                {
+                    "class": "bg-green",
+                    "value": "on",
+                    "top": 40,
+                    "left": 80,
+                    "width": 30,
+                    "height": 30
+                }
+            ]
+        },
+        {
+            "type": "text",
+            "class": "align-left",
+            "value": "L",
+            "top": 80,
+            "left": 0,
+            "width": 80,
+            "height": 30,
+            // Optional. Auto grade by default ignores case now. Set to 1 to take case into account.
+            "isCaseSensitive": 1
+        },
+        {
+            "type": "text",
+            "value": "C",
+            "top": 80,
+            "left": 100,
+            "width": 80,
+            "height": 30
+        },
+        {
+            "type": "text",
+            "class": "align-right",
+            "value": "R",
+            "top": 80,
+            "left": 200,
+            "width": 80,
+            "height": 30
+        },
+        // empty answer is correct answer. Applies only for "text" input. Note: question must have at least one input with value for this field to autoGraded correctly.
+        {
+            "type": "text",
+            "emptyIsCorrect": true,
+            "value": "",
+            "top": 80,
+            "left": 100,
+            "width": 80,
+            "height": 30
+        },
+        {
+            "type": "textarea",
+            "value": "Text area",
+            "top": 120,
+            "left": 0,
+            "width": 280,
+            "height": 60
+        },
+        {
+            "type": "textarea",
+            "value": "Text area",
+            "top": 120,
+            "left": 0,
+            "width": 280,
+            "height": 60,
+            "class": "has-math-toolbar"
+        },
+        {
+            "type": "textarea",
+            "value": "kairinis gravis &#768;  dešninis akutas &#769;  riestinis cirkumfleksas &#771;",
+            "top": 120,
+            "left": 0,
+            "width": 280,
+            "height": 60,
+            "accentFill": 1,
+            "class": "has-accent-toolbar"
+        },
+        {
+            // must be "radios", "checkboxes" is not acceptable
+            "type": "radios",
+            "class": "linkable",
+            "inputs": [
+                {
+                    "top": 82,
+                    "left": 122,
+                    "width": 352,
+                    "height": 73,
+                    "link": [
+                        "right"
+                    ]
+                },
+                {
+                    "top": 82,
+                    "left": 122,
+                    "width": 352,
+                    "height": 73,
+                    "link": [
+                        "right",
+                        "left"
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "radios",
+            "class": "linkable",
+            "inputs": [
+                {
+                    "top": 256,
+                    "left": 46,
+                    "width": 100,
+                    "height": 40
+                },
+                {
+                    "top": 256,
+                    "left": 206,
+                    "width": 100,
+                    "height": 40,
+                    "link": [
+                        "right"
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "colorable",
+            // required
+            "colorCount": 3,
+            // optional. colors for use: https://emokiniai.lt/ema/prima/dev/availableColorableColors.json
+            "colors": [
+                "yellow",
+                "orange",
+                "red",
+                "blue",
+                "green"
+            ],
+            // optional, for every correct answer (e.g. 1 x 3 correct colors, 3 points in total)
+            "points": 1,
+            "inputs": [
+                {
+                    "top": 64,
+                    "left": 444,
+                    "width": 50,
+                    "height": 121,
+                    // color must be color name from availableColorableColors.json or "none" for empty (transparent)
+                    "value": "none"
+                },
+                {
+                    "top": 145,
+                    "left": 494,
+                    "width": 159,
+                    "height": 39,
+                    "value": "green"
+                }
+            ]
+        }
+    ],
+    "customSymbols": [
+        "A",
+        "B",
+        "C"
+    ],
+    "groups": {
+        "1": {
+            "points": 1
+        }
+    }
+}
+            </textarea>
+        </label>
+    </div>
+    <div style="position: relative; width: 500px; height: 200px;">
+        <ap-input-radios
+                data-name="_input[1][0]"
+                data-value="0"
+                data-checked=""
+                data-top="100px"
+                data-left="20px"
+                data-width="80px"
+                data-height="80px"
+        ></ap-input-radios>
+        <ap-input-radios
+                data-name="_input[1][0]"
+                data-value="1"
+                data-checked="on"
+                data-top="100px"
+                data-left="120px"
+                data-width="80px"
+                data-height="80px"
+        ></ap-input-radios>
+    </div>
+</body>
+</html>

@@ -40,5 +40,10 @@ module.exports = {
     output: {
         filename: 'bundle.js',
         path: path.resolve(__dirname, 'dist'),
+        library: {
+            type: 'umd',
+            umdNamedDefine: true,
+            name: 'APQuestionInput',
+        },
     },
 };
