@@ -1,20 +1,35 @@
 {
-  "exclude": [
-    "node_modules",
-    "example"
-  ],
-  "compilerOptions": {
-    "outDir": "./dist/",
-    "sourceMap": true,
-    "declaration": true,
-    "lib": [ "es2015", "dom" ],
-    "noImplicitAny": true,
-    "module": "es2015",
-    "target": "es6",
-    "jsx": "react",
-    "allowJs": true,
-    "moduleResolution": "node",
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true
-  }
+    "exclude": [
+        "node_modules",
+        "example"
+    ],
+    "compilerOptions": {
+        "outDir": "./dist/",
+        "sourceMap": true,
+        "declaration": true,
+        "lib": [
+            "es2015",
+            "dom"
+        ],
+        "noImplicitAny": true,
+        "module": "es2015",
+        "target": "es6",
+        "jsx": "react",
+        "allowJs": true,
+        "moduleResolution": "node",
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "baseUrl": "./",
+        "paths": {
+            "Components/*": [
+                "src/components/*"
+            ],
+            "Controllers/*": [
+                "src/controllers/*"
+            ],
+            "Utils/*": [
+                "src/utils/*"
+            ]
+        }
+    }
 }

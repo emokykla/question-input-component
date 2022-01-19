@@ -1,8 +1,4 @@
 import { Controller } from "@hotwired/stimulus"
-import html from 'templates/inputs/radios.hbs';
-
-const template = document.createElement('template');
-template.innerHTML = html;
 
 export default class extends Controller {
   static values = {
@@ -13,6 +9,9 @@ export default class extends Controller {
     checked: String,
   }
   private checkedValue: string;
+  static classes = [ 'selected' ];
+  private selectedClass: string;
+  private selectedClasses: string;
 
   connect() {
   }
@@ -35,9 +34,9 @@ export default class extends Controller {
 
   checkedValueChanged(value: string) {
     if (value) {
-      this.element.classList.add('ap-input-radios--is-selected');
+      this.element.classList.add(this.selectedClass);
     } else {
-      this.element.classList.remove('ap-input-radios--is-selected');
+      this.element.classList.remove(this.selectedClass);
     }
   }
 

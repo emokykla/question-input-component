@@ -30,8 +30,10 @@ module.exports = {
     resolve: {
         extensions: ['.tsx', '.ts', '.js'],
         alias: {
-            'handlebars' : 'handlebars/dist/handlebars.js',
-            templates: path.resolve(__dirname, 'src/templates')
+            handlebars : 'handlebars/dist/handlebars.js',
+            Components: path.resolve(__dirname, 'src/components'),
+            Controllers: path.resolve(__dirname, 'src/controllers'),
+            Utils: path.resolve(__dirname, 'src/utils'),
         },
         fallback: {
             "fs": false

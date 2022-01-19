@@ -1,3 +1,4 @@
+{{controllerClass 'selected' (concat controller '--is-selected')}}
 <label
         class="{{controller}}__label"
 >
@@ -9,5 +10,6 @@
             value="{{value}}"
             {{#if (controllerValue 'checked')}}checked{{/if}}
             data-action="input->{{controller}}#select deselect->{{controller}}#deselect"
+            data-{{controller}}-selected-class="{{controller}}--is-selected"
     >
 </label>

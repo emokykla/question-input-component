@@ -1,22 +1,31 @@
-import { Application, Controller } from "@hotwired/stimulus";
+import { Application, ControllerConstructor } from "@hotwired/stimulus";
 import * as HandleBars from 'handlebars';
+import { toCamelCase } from 'Utils/camel-case';
+
+interface ControllerConstructorWithClasses extends ControllerConstructor {
+  classes: Array<string>;
+}
 
 export class ControllerComponent extends HTMLElement {
   readonly identifier: string;
   readonly template: HandleBars.Template;
-  readonly controller = Controller;
+  readonly controller: ControllerConstructorWithClasses;
 
   constructor() {
     super();
   }
 
   connectedCallback(): void {
+    this.registerHandleBarsHelpers();
     this.startStimulusLocalApplication();
     this.setIdentifierData();
+    this.renderInnerHTML();
+  }
+
+  private registerHandleBarsHelpers() {
     HandleBars.registerHelper('controllerValue', (key) => this.getValueByShortKey(key));
-    setTimeout(() => {
-      this.renderInnerHTML();
-    });
+    HandleBars.registerHelper('controllerClass', (key, className) => this.addClassByShortKey(key, className));
+    HandleBars.registerHelper('concat', (stringA, stringB) => stringA + stringB);
   }
 
   private startStimulusLocalApplication() {
@@ -31,13 +40,21 @@ export class ControllerComponent extends HTMLElement {
 
   private getValueByShortKey(key: string) {
     const attributeKey = `${this.identifier}-${key}-value`;
-    const camelCaseKey = attributeKey.toLowerCase().replace(/[^a-zA-Z0-9]+(.)/g, (m, chr) => chr.toUpperCase());
+    const camelCaseKey = toCamelCase(attributeKey);
     return this.dataset[camelCaseKey];
+  }
+
+  private addClassByShortKey(key: string, className:string) {
+    const attributeKey = `${this.identifier}-${key}-class`;
+    const camelCaseKey = toCamelCase(attributeKey);
+    this.dataset[camelCaseKey] = className;
   }
 
   private renderInnerHTML() {
     const template = document.createElement('template');
     template.innerHTML = HandleBars.compile(this.template)(this.dataset);
-    this.append(template.content.cloneNode(true));
+    setTimeout(() => {
+      this.append(template.content.cloneNode(true));
+    });
   }
 }

@@ -1,3 +1,3 @@
-import { Radios } from './components/radios/radios';
+import { Radios } from 'Components/radios/radios';
 
 export { Radios };

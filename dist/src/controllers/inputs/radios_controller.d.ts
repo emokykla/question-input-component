@@ -8,6 +8,9 @@ export default class extends Controller {
         checked: StringConstructor;
     };
     private checkedValue;
+    static classes: string[];
+    private selectedClass;
+    private selectedClasses;
     connect(): void;
     topValueChanged(value: string): void;
     leftValueChanged(value: string): void;
