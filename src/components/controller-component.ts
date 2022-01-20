@@ -10,6 +10,7 @@ export class ControllerComponent extends HTMLElement {
   readonly identifier: string;
   readonly template: HandleBars.Template;
   readonly controller: ControllerConstructorWithClasses;
+  private application: Application;
 
   constructor() {
     super();
@@ -22,6 +23,10 @@ export class ControllerComponent extends HTMLElement {
     this.renderInnerHTML();
   }
 
+  disconnectedCallback(): void {
+    this.application?.stop();
+  }
+
   private registerHandleBarsHelpers() {
     HandleBars.registerHelper('controllerValue', (key) => this.getValueByShortKey(key));
     HandleBars.registerHelper('controllerClass', (key, className) => this.addClassByShortKey(key, className));
@@ -29,8 +34,8 @@ export class ControllerComponent extends HTMLElement {
   }
 
   private startStimulusLocalApplication() {
-    const application = Application.start(this);
-    application.register(this.identifier, this.controller);
+    this.application = Application.start(this);
+    this.application.register(this.identifier, this.controller);
   }
 
   private setIdentifierData() {

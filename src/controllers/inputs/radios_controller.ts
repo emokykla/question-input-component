@@ -42,7 +42,7 @@ export default class extends Controller {
 
   select(event: Event) {
     const inputElement = event.target as HTMLInputElement;
-    document.querySelector(`${this.element.tagName} [name='${inputElement.name}']:not(:checked)`).dispatchEvent(new Event('deselect'));
+    document.querySelector(`${this.element.tagName} [name='${inputElement.name}']:not(:checked)`)?.dispatchEvent(new Event('deselect'));
     this.checkedValue = 'on';
   }
 
