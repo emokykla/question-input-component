@@ -13,6 +13,9 @@ module.exports = {
             {
                 test: /\.hbs$/i,
                 loader: "html-loader",
+                options: {
+                    minimize: false,
+                },
             },
             {
                 test: /\.s[ac]ss$/i,

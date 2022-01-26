@@ -19,4 +19,5 @@ export default class extends Controller {
     checkedValueChanged(value: string): void;
     select(event: Event): void;
     deselect(event: Event): void;
+    triggerDeselectGroupRadios(event: Event): void;
 }

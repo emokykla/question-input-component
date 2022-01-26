@@ -41,12 +41,22 @@ export default class extends Controller {
   }
 
   select(event: Event) {
-    const inputElement = event.target as HTMLInputElement;
-    document.querySelector(`${this.element.tagName} [name='${inputElement.name}']:not(:checked)`)?.dispatchEvent(new Event('deselect'));
     this.checkedValue = 'on';
+    this.triggerDeselectGroupRadios(event);
   }
 
   deselect(event: Event) {
     this.checkedValue = '';
+  }
+
+  triggerDeselectGroupRadios(event: Event) {
+    const inputElement = event.target as HTMLInputElement;
+    const deselectedRadios = document.querySelectorAll(
+      `${this.element.tagName} [name='${inputElement.name}']:not(:checked)`
+    );
+    deselectedRadios?.forEach((element) => {
+      console.log(element);
+      element.dispatchEvent(new Event('deselect'));
+    });
   }
 }
