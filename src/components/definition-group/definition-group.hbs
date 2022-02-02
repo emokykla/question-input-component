@@ -1,0 +1,14 @@
+{{#each inputList}}
+    {{#if (isEqual this.options.type ../types.radio) }}
+        <qic-radio
+                data-{{../identifier}}-target="inputs"
+                data-qic-radio-name-value="{{this.options.name}}"
+                data-qic-radio-value-value="{{this.options.value}}"
+                data-qic-radio-checked-value="{{this.options.checked}}"
+                data-qic-radio-top-value="{{this.options.top}}"
+                data-qic-radio-left-value="{{this.options.left}}"
+                data-qic-radio-width-value="{{this.options.width}}"
+                data-qic-radio-height-value="{{this.options.height}}"
+        ></qic-radio>
+    {{/if}}
+{{/each}}

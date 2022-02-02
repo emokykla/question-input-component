@@ -1,1 +1,1 @@
-export declare function toCamelCase(string: string): string;
+export declare const toCamelCase: (string: string) => string;

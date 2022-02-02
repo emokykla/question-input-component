@@ -8,7 +8,6 @@ export declare class ControllerComponent extends HTMLElement {
     readonly template: HandleBars.Template;
     readonly controller: ControllerConstructorWithClasses;
     private application;
-    private elementController;
     private handleBars;
     constructor();
     connectedCallback(): void;
@@ -16,7 +15,6 @@ export declare class ControllerComponent extends HTMLElement {
     private registerHandleBarsHelpers;
     private startStimulusLocalApplication;
     private setIdentifierData;
-    private getValueByShortKey;
     private addClassByShortKey;
     private renderInnerHTML;
 }

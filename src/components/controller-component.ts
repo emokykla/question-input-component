@@ -1,7 +1,6 @@
 import { Application, ControllerConstructor } from "@hotwired/stimulus";
 import * as HandleBars from 'handlebars';
 import { toCamelCase } from 'Utils/camel-case';
-import { Controller } from '@hotwired/stimulus/dist/types/core/controller';
 
 interface ControllerConstructorWithClasses extends ControllerConstructor {
   classes?: Array<string>;
@@ -12,7 +11,6 @@ export class ControllerComponent extends HTMLElement {
   readonly template: HandleBars.Template;
   readonly controller: ControllerConstructorWithClasses;
   private application: Application;
-  private elementController: Controller;
   private handleBars = HandleBars.create();
 
   constructor() {
@@ -31,12 +29,9 @@ export class ControllerComponent extends HTMLElement {
   }
 
   private registerHandleBarsHelpers() {
-    this.handleBars.registerHelper('controllerValue', (key) => this.getValueByShortKey(key));
     this.handleBars.registerHelper('controllerClass', (key, className) => this.addClassByShortKey(key, className));
     this.handleBars.registerHelper('concat', (value1, value2) => value1 + value2);
-    this.handleBars.registerHelper('isEqual', (value1, value2) => {
-      return value1 === value2;
-    });
+    this.handleBars.registerHelper('isEqual', (value1, value2) => value1 === value2);
   }
 
   private startStimulusLocalApplication() {
@@ -47,13 +42,6 @@ export class ControllerComponent extends HTMLElement {
   private setIdentifierData() {
     this.dataset.controller = this.identifier;
     this.classList.add(this.identifier);
-  }
-
-  private getValueByShortKey(key: string) {
-    const camelCaseKey = toCamelCase(key);
-    if (this.elementController && (this.elementController as any)[camelCaseKey]) {
-      return (this.elementController as any)[camelCaseKey];
-    }
   }
 
   private addClassByShortKey(key: string, className:string) {
@@ -73,7 +61,6 @@ export class ControllerComponent extends HTMLElement {
         ...controller,
         identifier: this.identifier,
       };
-      this.elementController = controller;
       template.innerHTML = this.handleBars.compile(this.template)(partials);
       this.append(template.content.cloneNode(true));
     });

@@ -1,12 +1,13 @@
-import './definition-input.scss';
+import './definition-group.scss';
 import { ControllerComponent } from 'Components/controller-component';
 import { Controller } from '@hotwired/stimulus';
-export declare class DefinitionInput extends ControllerComponent {
-    readonly identifier = "ap-definition-group";
+import { Radio } from 'Components/radio/radio';
+export declare class DefinitionGroup extends ControllerComponent {
+    readonly identifier = "qic-definition-group";
     readonly template: string;
-    readonly controller: typeof DefinitionInputController;
+    readonly controller: typeof DefinitionGroupController;
 }
-export declare class DefinitionInputController extends Controller {
+export declare class DefinitionGroupController extends Controller {
     static targets: string[];
     static values: {
         definition: ObjectConstructor;
@@ -25,9 +26,9 @@ export declare class DefinitionInputController extends Controller {
         width: number;
         height: number;
     };
-    readonly inputsTargets: Array<ControllerComponent>;
+    readonly inputsTargets: Array<Radio>;
     inputList: any[];
-    type: {
+    types: {
         radio: string;
     };
     connect(): void;
@@ -35,4 +36,6 @@ export declare class DefinitionInputController extends Controller {
         width: number;
         height: number;
     }): void;
+    private static getScales;
+    private getType;
 }

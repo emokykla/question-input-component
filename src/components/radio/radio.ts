@@ -1,15 +1,15 @@
-import './radios.scss';
-import html from './radios.hbs';
+import './radio.scss';
+import html from './radio.hbs';
 import { ControllerComponent } from 'Components/controller-component';
 import { Controller } from '@hotwired/stimulus';
 
-export class Radios extends ControllerComponent {
-  readonly identifier = 'ap-input-radios';
+export class Radio extends ControllerComponent {
+  readonly identifier = 'qic-radio';
   readonly template = html;
-  readonly controller = RadiosController;
+  readonly controller = RadioController;
 }
 
-export class RadiosController extends Controller {
+export class RadioController extends Controller {
   static values = {
     top: String,
     left: String,
@@ -28,7 +28,7 @@ export class RadiosController extends Controller {
   name: string;
   value: string;
 
-  connect() {
+  connect() {console.log(this);
     this.name = this.nameValue;
     this.value = this.valueValue;
   }
@@ -55,7 +55,7 @@ export class RadiosController extends Controller {
     } else {
       this.element.classList.remove(this.selectedClass);
     }
-    this.checked = value;console.log(value, this.selectedClass);
+    this.checked = value;
   }
 
   select(event: Event) {

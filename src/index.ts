@@ -1,7 +1,7 @@
-import { Radios } from 'Components/radios/radios';
-import { DefinitionInput } from 'Components/definition-input/definition-input';
+import { Radio } from 'Components/radio/radio';
+import { DefinitionGroup } from 'Components/definition-group/definition-group';
 
-export { Radios, DefinitionInput };
+export { Radio, DefinitionGroup };
 
-window.customElements.define('ap-input-radios', Radios);
-window.customElements.define('ap-definition-input', DefinitionInput);
+window.customElements.define('qic-radio', Radio);
+window.customElements.define('qic-definition-group', DefinitionGroup);

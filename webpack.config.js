@@ -48,7 +48,7 @@ module.exports = {
         library: {
             type: 'umd',
             umdNamedDefine: true,
-            name: 'APQuestionInput',
+            name: 'QuestionInputComponent',
         },
     },
 };

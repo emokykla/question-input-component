@@ -1,8 +1,8 @@
-ap-input-radios {
+qic-radio {
     display: block;
     position: absolute;
 
-    .ap-input-radios {
+    .qic-radio {
         &__label {
             display: flex;
             box-sizing: border-box;
@@ -18,8 +18,8 @@ ap-input-radios {
         }
     }
 
-    &.ap-input-radios--is-selected {
-        .ap-input-radios__label {
+    &.qic-radio--is-selected {
+        .qic-radio__label {
             border-width: 5px;
         }
     }
