@@ -6,11 +6,17 @@ export default class extends Controller {
         width: StringConstructor;
         height: StringConstructor;
         checked: StringConstructor;
+        name: StringConstructor;
+        value: StringConstructor;
     };
     private checkedValue;
+    private nameValue;
+    private valueValue;
     static classes: string[];
     private selectedClass;
-    private selectedClasses;
+    checked: string;
+    name: string;
+    value: string;
     connect(): void;
     topValueChanged(value: string): void;
     leftValueChanged(value: string): void;

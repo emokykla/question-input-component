@@ -1,15 +1,14 @@
-{{controllerClass 'selected' (concat controller '--is-selected')}}
+{{controllerClass 'selected' (concat identifier '--is-selected')}}
 <label
-        class="{{controller}}__label"
+        class="{{identifier}}__label"
 >
     <input
             id="input"
-            class="{{controller}}__input"
+            class="{{identifier}}__input"
             type="radio"
             name="{{name}}"
             value="{{value}}"
-            {{#if (controllerValue 'checked')}}checked{{/if}}
-            data-action="input->{{controller}}#select deselect->{{controller}}#deselect"
-            data-{{controller}}-selected-class="{{controller}}--is-selected"
+            {{#if checked}}checked{{/if}}
+            data-action="input->{{identifier}}#select deselect->{{identifier}}#deselect"
     >
 </label>

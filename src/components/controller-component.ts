@@ -1,9 +1,10 @@
 import { Application, ControllerConstructor } from "@hotwired/stimulus";
 import * as HandleBars from 'handlebars';
 import { toCamelCase } from 'Utils/camel-case';
+import { Controller } from '@hotwired/stimulus/dist/types/core/controller';
 
 interface ControllerConstructorWithClasses extends ControllerConstructor {
-  classes: Array<string>;
+  classes?: Array<string>;
 }
 
 export class ControllerComponent extends HTMLElement {
@@ -11,6 +12,8 @@ export class ControllerComponent extends HTMLElement {
   readonly template: HandleBars.Template;
   readonly controller: ControllerConstructorWithClasses;
   private application: Application;
+  private elementController: Controller;
+  private handleBars = HandleBars.create();
 
   constructor() {
     super();
@@ -28,9 +31,12 @@ export class ControllerComponent extends HTMLElement {
   }
 
   private registerHandleBarsHelpers() {
-    HandleBars.registerHelper('controllerValue', (key) => this.getValueByShortKey(key));
-    HandleBars.registerHelper('controllerClass', (key, className) => this.addClassByShortKey(key, className));
-    HandleBars.registerHelper('concat', (stringA, stringB) => stringA + stringB);
+    this.handleBars.registerHelper('controllerValue', (key) => this.getValueByShortKey(key));
+    this.handleBars.registerHelper('controllerClass', (key, className) => this.addClassByShortKey(key, className));
+    this.handleBars.registerHelper('concat', (value1, value2) => value1 + value2);
+    this.handleBars.registerHelper('isEqual', (value1, value2) => {
+      return value1 === value2;
+    });
   }
 
   private startStimulusLocalApplication() {
@@ -44,9 +50,10 @@ export class ControllerComponent extends HTMLElement {
   }
 
   private getValueByShortKey(key: string) {
-    const attributeKey = `${this.identifier}-${key}-value`;
-    const camelCaseKey = toCamelCase(attributeKey);
-    return this.dataset[camelCaseKey];
+    const camelCaseKey = toCamelCase(key);
+    if (this.elementController && (this.elementController as any)[camelCaseKey]) {
+      return (this.elementController as any)[camelCaseKey];
+    }
   }
 
   private addClassByShortKey(key: string, className:string) {
@@ -57,8 +64,17 @@ export class ControllerComponent extends HTMLElement {
 
   private renderInnerHTML() {
     const template = document.createElement('template');
-    template.innerHTML = HandleBars.compile(this.template)(this.dataset);
+    // compile to add class names
+    this.handleBars.compile(this.template)({ identifier: this.identifier });
+    // run async to wait stimulus controller connect
     setTimeout(() => {
+      const controller = this.application.getControllerForElementAndIdentifier(this, this.identifier);
+      const partials = {
+        ...controller,
+        identifier: this.identifier,
+      };
+      this.elementController = controller;
+      template.innerHTML = this.handleBars.compile(this.template)(partials);
       this.append(template.content.cloneNode(true));
     });
   }

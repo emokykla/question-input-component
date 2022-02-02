@@ -1,0 +1,14 @@
+{{#each (controllerValue 'input-list')}}
+    {{#if (isEqual this.options.type ../type.radio) }}
+        <ap-input-radios
+                data-{{../controller}}-target="inputs"
+                data-ap-input-radios-name-value="{{this.options.name}}"
+                data-ap-input-radios-value-value="{{this.options.value}}"
+                data-ap-input-radios-checked-value="{{this.options.checked}}"
+                data-ap-input-radios-top-value="{{this.options.top}}"
+                data-ap-input-radios-left-value="{{this.options.left}}"
+                data-ap-input-radios-width-value="{{this.options.width}}"
+                data-ap-input-radios-height-value="{{this.options.height}}"
+        ></ap-input-radios>
+    {{/if}}
+{{/each}}

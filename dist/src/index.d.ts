@@ -1,2 +1,3 @@
 import { Radios } from 'Components/radios/radios';
-export { Radios };
+import { DefinitionInput } from 'Components/definition-input/definition-input';
+export { Radios, DefinitionInput };
