@@ -28,7 +28,7 @@ export class RadioController extends Controller {
   name: string;
   value: string;
 
-  connect() {console.log(this);
+  connect() {
     this.name = this.nameValue;
     this.value = this.valueValue;
   }
