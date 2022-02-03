@@ -1,17 +1,45 @@
-import { Application, ControllerConstructor } from "@hotwired/stimulus";
+import { Application, ControllerConstructor, Controller } from "@hotwired/stimulus";
 import * as HandleBars from 'handlebars';
 import { toCamelCase } from 'Utils/camel-case';
+import { Context } from '@hotwired/stimulus/dist/types/core/context';
 
-interface ControllerConstructorWithClasses extends ControllerConstructor {
+interface ControllerConstructorExtended extends ControllerConstructor {
   classes?: Array<string>;
+}
+
+type InitialData = { [name: string]: any } & { identifier?: never };
+type Setter = { [name: string]: Function };
+
+
+export class ExtendedController extends Controller {
+  $setter = {} as Setter;
+  $initialData = {} as InitialData;
+
+  constructor(context: Context) {
+    super(context);
+  }
+
+  assignInitialData(initialData: InitialData): void {
+    this.$initialData = {
+      ...this.$initialData,
+      ...initialData
+    };
+  }
+
+  assignSetter(setters: Array<Function>) {
+    setters.forEach((setter) => {
+      this.$setter[setter.name] = setter.bind(this);
+    });
+  }
 }
 
 export class ControllerComponent extends HTMLElement {
   readonly identifier: string;
   readonly template: HandleBars.Template;
-  readonly controller: ControllerConstructorWithClasses;
+  readonly controller: ControllerConstructorExtended;
   private application: Application;
   private handleBars = HandleBars.create();
+  $setter: {[name: string]: Function};
 
   constructor() {
     super();
@@ -56,9 +84,10 @@ export class ControllerComponent extends HTMLElement {
     this.handleBars.compile(this.template)({ identifier: this.identifier });
     // run async to wait stimulus controller connect
     setTimeout(() => {
-      const controller = this.application.getControllerForElementAndIdentifier(this, this.identifier);
+      const controller = (this.application.getControllerForElementAndIdentifier(this, this.identifier) as unknown as { $initialData: Object, $setter: {[name: string]: Function} });
+      this.$setter = controller?.$setter || {};
       const partials = {
-        ...controller,
+        ...controller?.$initialData,
         identifier: this.identifier,
       };
       template.innerHTML = this.handleBars.compile(this.template)(partials);

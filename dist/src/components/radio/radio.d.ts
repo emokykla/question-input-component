@@ -1,12 +1,11 @@
 import './radio.scss';
-import { ControllerComponent } from 'Components/controller-component';
-import { Controller } from '@hotwired/stimulus';
+import { ControllerComponent, ExtendedController } from 'Components/controller-component';
 export declare class Radio extends ControllerComponent {
     readonly identifier = "qic-radio";
     readonly template: string;
     readonly controller: typeof RadioController;
 }
-export declare class RadioController extends Controller {
+export declare class RadioController extends ExtendedController {
     static values: {
         top: StringConstructor;
         left: StringConstructor;
@@ -19,11 +18,12 @@ export declare class RadioController extends Controller {
     private checkedValue;
     private nameValue;
     private valueValue;
+    private topValue;
+    private leftValue;
+    private widthValue;
+    private heightValue;
     static classes: string[];
     private selectedClass;
-    checked: string;
-    name: string;
-    value: string;
     connect(): void;
     topValueChanged(value: string): void;
     leftValueChanged(value: string): void;
@@ -33,4 +33,8 @@ export declare class RadioController extends Controller {
     select(event: Event): void;
     deselect(event: Event): void;
     triggerDeselectGroupRadios(event: Event): void;
+    setTopValue(value: string): void;
+    setLeftValue(value: string): void;
+    setWidthValue(value: string): void;
+    setHeightValue(value: string): void;
 }

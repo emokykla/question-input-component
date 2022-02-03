@@ -1,7 +1,6 @@
 import './definition-group.scss';
 import html from './definition-group.hbs';
-import { ControllerComponent } from 'Components/controller-component';
-import { Controller } from '@hotwired/stimulus';
+import { ControllerComponent, ExtendedController } from 'Components/controller-component';
 import { Radio } from 'Components/radio/radio';
 
 const LINKABLE = 'linkable';
@@ -11,13 +10,15 @@ const TYPES = {
 };
 const INPUT_TYPE_RADIOS = 'radios';
 
+type ContainerDimensions = { width: number; height: number; };
+
 export class DefinitionGroup extends ControllerComponent {
   readonly identifier = 'qic-definition-group';
   readonly template = html;
   readonly controller = DefinitionGroupController;
 }
 
-export class DefinitionGroupController extends Controller {
+export class DefinitionGroupController extends ExtendedController {
   static targets = [ 'inputs' ];
   static values = {
     definition: Object,
@@ -32,17 +33,23 @@ export class DefinitionGroupController extends Controller {
     answer: Array<any>,
     options: any,
   };
-  declare readonly containerDimensionsValue: { width: number; height: number; };
+  declare containerDimensionsValue: ContainerDimensions;
   declare readonly inputsTargets: Array<Radio>;
 
-  inputList = [] as Array<any>;
-  types = TYPES;
-
   connect() {
-    const { id, name, inputs, readonly, answer, options } = this.definitionValue;
-    this.inputList = [];
-    const { hScale, vScale } = DefinitionGroupController.getScales(options.width, this.containerDimensionsValue.width, this.containerDimensionsValue.height );
+    this.assignInitialData({
+      inputList: [],
+      types: TYPES,
+    });
+    this.assignSetter([
+      this.setContainerDimensionsValue,
+    ]);
+    this.initiateInputs();
+  }
 
+  initiateInputs() {
+    const { id, name, inputs, readonly, answer, options } = this.definitionValue;
+    const { hScale, vScale } = DefinitionGroupController.getScales(options.width, this.containerDimensionsValue.width, this.containerDimensionsValue.height );
     inputs?.forEach((definitionItem, definitionItemIndex) => {
       const inputOptions = {
         name: `${name}[${id}]`,
@@ -60,14 +67,14 @@ export class DefinitionGroupController extends Controller {
           inputOptions.checked = CHECKED;
         }
       }
-      this.inputList.push({
+      this.$initialData.inputList.push({
         options: inputOptions,
         definition: definitionItem,
       });
     });
   }
 
-  containerDimensionsValueChanged(value: { width: number; height: number; }) {
+  containerDimensionsValueChanged(value: ContainerDimensions) {
     const { inputs, options } = this.definitionValue;
     const { hScale, vScale } = DefinitionGroupController.getScales(options.width, value.width, value.height );
     this.inputsTargets.forEach((inputElement, index) => {
@@ -76,11 +83,15 @@ export class DefinitionGroupController extends Controller {
       const left =  `${definitionItem.left * hScale}%`;
       const width = `${definitionItem.width * hScale}%`;
       const height = `${definitionItem.height * vScale}%`;
-      inputElement.setAttribute(`data-${inputElement.identifier}-top-value`, top);
-      inputElement.setAttribute(`data-${inputElement.identifier}-left-value`, left);
-      inputElement.setAttribute(`data-${inputElement.identifier}-width-value`, width);
-      inputElement.setAttribute(`data-${inputElement.identifier}-height-value`, height);
+      inputElement.$setter.setTopValue(top);
+      inputElement.$setter.setLeftValue(left);
+      inputElement.$setter.setWidthValue(width);
+      inputElement.$setter.setHeightValue(height);
     });
+  }
+
+  setContainerDimensionsValue(value: ContainerDimensions) {
+    this.containerDimensionsValue = value;
   }
 
   private static getScales(width: number, containerWidth: number, containerHeight: number) {

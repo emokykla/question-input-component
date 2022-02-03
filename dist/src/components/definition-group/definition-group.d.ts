@@ -1,13 +1,16 @@
 import './definition-group.scss';
-import { ControllerComponent } from 'Components/controller-component';
-import { Controller } from '@hotwired/stimulus';
+import { ControllerComponent, ExtendedController } from 'Components/controller-component';
 import { Radio } from 'Components/radio/radio';
+declare type ContainerDimensions = {
+    width: number;
+    height: number;
+};
 export declare class DefinitionGroup extends ControllerComponent {
     readonly identifier = "qic-definition-group";
     readonly template: string;
     readonly controller: typeof DefinitionGroupController;
 }
-export declare class DefinitionGroupController extends Controller {
+export declare class DefinitionGroupController extends ExtendedController {
     static targets: string[];
     static values: {
         definition: ObjectConstructor;
@@ -22,20 +25,13 @@ export declare class DefinitionGroupController extends Controller {
         answer: Array<any>;
         options: any;
     };
-    readonly containerDimensionsValue: {
-        width: number;
-        height: number;
-    };
+    containerDimensionsValue: ContainerDimensions;
     readonly inputsTargets: Array<Radio>;
-    inputList: any[];
-    types: {
-        radio: string;
-    };
     connect(): void;
-    containerDimensionsValueChanged(value: {
-        width: number;
-        height: number;
-    }): void;
+    initiateInputs(): void;
+    containerDimensionsValueChanged(value: ContainerDimensions): void;
+    setContainerDimensionsValue(value: ContainerDimensions): void;
     private static getScales;
     private getType;
 }
+export {};

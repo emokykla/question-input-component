@@ -1,7 +1,6 @@
 import './radio.scss';
 import html from './radio.hbs';
-import { ControllerComponent } from 'Components/controller-component';
-import { Controller } from '@hotwired/stimulus';
+import { ControllerComponent, ExtendedController } from 'Components/controller-component';
 
 export class Radio extends ControllerComponent {
   readonly identifier = 'qic-radio';
@@ -9,7 +8,7 @@ export class Radio extends ControllerComponent {
   readonly controller = RadioController;
 }
 
-export class RadioController extends Controller {
+export class RadioController extends ExtendedController {
   static values = {
     top: String,
     left: String,
@@ -22,15 +21,25 @@ export class RadioController extends Controller {
   private checkedValue: string;
   private nameValue: string;
   private valueValue: string;
+  private topValue: string;
+  private leftValue: string;
+  private widthValue: string;
+  private heightValue: string;
   static classes = [ 'selected' ];
   private selectedClass: string;
-  checked: string;
-  name: string;
-  value: string;
 
   connect() {
-    this.name = this.nameValue;
-    this.value = this.valueValue;
+    this.assignInitialData({
+      name: this.nameValue,
+      value: this.valueValue,
+      checked: this.checkedValue,
+    });
+    this.assignSetter([
+      this.setTopValue,
+      this.setLeftValue,
+      this.setWidthValue,
+      this.setHeightValue,
+    ]);
   }
 
   topValueChanged(value: string) {
@@ -55,7 +64,6 @@ export class RadioController extends Controller {
     } else {
       this.element.classList.remove(this.selectedClass);
     }
-    this.checked = value;
   }
 
   select(event: Event) {
@@ -76,5 +84,22 @@ export class RadioController extends Controller {
       element.dispatchEvent(new Event('deselect'));
     });
   }
+
+  setTopValue(value: string) {
+    this.topValue = value;
+  }
+
+  setLeftValue(value: string) {
+    this.leftValue = value;
+  }
+
+  setWidthValue(value: string) {
+    this.widthValue = value;
+  }
+
+  setHeightValue(value: string) {
+    this.heightValue = value;
+  }
+
 }
 
